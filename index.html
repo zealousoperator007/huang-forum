@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huang - Safe Space Community Forum</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root { 
+            --primary-gold: #D4AF37; 
+            --dark-void: #1a1a1a;
+            --light-bg: #f5f7fa;
+            --secondary-pink: #ff6b9d;
+            --accent-teal: #00bcd4;
+        }
+        
+        html { scroll-behavior: smooth; }
+        
+        body { 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Navbar Enhancements */
+        .navbar {
+            backdrop-filter: blur(10px);
+            background: rgba(26, 26, 26, 0.95) !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+        }
+        
+        .navbar:not(.navbar-dark) { background: rgba(26, 26, 26, 0.98) !important; }
+        .navbar-brand { 
+            font-size: 1.8rem !important;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand:hover { 
+            transform: scale(1.05);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+        
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-gold) !important;
+            transform: translateY(-2px);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after { width: 100%; }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%), 
+                        url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI4MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGVsbGlwc2UgY3g9IjYwMCIgY3k9IjQwMCIgcj0iNDAwIiBmaWxsPSIjRkZGRkZGIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=');
+            color: white;
+            padding: 160px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0, 188, 212, 0.1) 0%, transparent 50%);
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .phoenix-icon { 
+            font-size: 5rem;
+            animation: rise 2s ease-out forwards, float 3s ease-in-out 2s infinite;
+        }
+        
+        @keyframes rise {
+            0% { 
+                opacity: 0; 
+                transform: translateY(60px) scale(0.8);
+            } 
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1);
+            } 
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            animation: slideInDown 1s ease-out;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero .lead {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            animation: slideInUp 1s ease-out 0.2s forwards;
+            opacity: 0;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-weight: 300;
+        }
+        
+        @keyframes slideInDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .btn-group-hero {
+            animation: slideInUp 1s ease-out 0.4s forwards;
+            opacity: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        
+        .btn {
+            border: none;
+            border-radius: 50px;
+            padding: 12px 35px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, #e6c247 100%);
+            color: var(--dark-void) !important;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+        
+        .btn-warning:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5);
+        }
+        
+        .btn-outline-light {
+            border: 2px solid white;
+            color: white !important;
+        }
+        
+        .btn-outline-light:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-gold);
+            color: var(--primary-gold) !important;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Section Spacing */
+        section { 
+            padding: 80px 20px;
+        }
+        
+        section h2 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            position: relative;
+            animation: fadeInScale 0.8s ease-out;
+        }
+        
+        section h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-gold), var(--accent-teal));
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+        
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        /* About Section */
+        #about { background: white; }
+        
+        #about p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        #about img {
+            animation: zoomIn 1s ease-out;
+            transition: transform 0.5s ease;
+        }
+        
+        #about img:hover { transform: scale(1.05); }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Features Section */
+        #features { 
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-gold), var(--accent-teal));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-gold);
+        }
+        
+        .feature-card:hover::before { transform: scaleX(1); }
+        
+        .feature-card i {
+            transition: all 0.4s ease;
+            display: inline-block;
+        }
+        
+        .feature-card:hover i {
+            transform: scale(1.2) rotate(10deg);
+        }
+        
+        .feature-card h5 {
+            font-weight: 700;
+            color: var(--dark-void);
+            margin: 1rem 0;
+            font-size: 1.3rem;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        /* Join Section */
+        #join {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(0, 188, 212, 0.05) 100%);
+        }
+        
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+            transform: translateY(-2px);
+        }
+        
+        .form-control::placeholder {
+            color: #bbb;
+            font-style: italic;
+        }
+        
+        /* Safety Section */
+        #safety {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, #e6c247 100%);
+            color: var(--dark-void);
+        }
+        
+        .safety-badge {
+            background: rgba(26, 26, 26, 0.1);
+            color: var(--dark-void);
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 2px solid rgba(26, 26, 26, 0.2);
+            display: inline-block;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .safety-badge:hover {
+            background: rgba(26, 26, 26, 0.2);
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .safety-badge i {
+            margin-right: 0.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-void);
+            color: white;
+            border-top: 2px solid var(--primary-gold);
+        }
+        
+        footer a {
+            color: var(--primary-gold);
+            transition: all 0.3s ease;
+            font-size: 1.3rem;
+        }
+        
+        footer a:hover {
+            color: white;
+            transform: scale(1.2) translateY(-3px);
+        }
+        
+        /* Scroll Animation */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .scroll-fade.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero { padding: 100px 20px; }
+            .phoenix-icon { font-size: 3.5rem; }
+            section { padding: 50px 20px; }
+            .btn-group-hero { gap: 1rem; }
+            .btn { padding: 10px 25px; font-size: 0.95rem; }
+            
+            .navbar { padding: 0.5rem 0; }
+            .navbar-brand { font-size: 1.5rem !important; }
+            
+            .feature-card {
+                margin-bottom: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero { 
+                padding: 80px 15px;
+                min-height: auto;
+            }
+            
+            .phoenix-icon { font-size: 3rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero .lead { font-size: 0.95rem; }
+            
+            section h2 { font-size: 1.8rem; }
+            
+            .btn-group-hero {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn { width: 100%; }
+            
+            .form-control { font-size: 16px; /* Prevents zoom on iOS */ }
+            
+            .safety-badge {
+                display: block;
+                margin: 0.75rem 0;
+            }
+        }
+        
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-gold);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid px-3 px-md-5">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-feather-alt text-warning me-2"></i>Huang
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#join">Join</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#safety">Safety</a></li>
+                    <li class="nav-item ms-lg-3"><a class="btn btn-warning btn-sm" href="#login">Login / Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content text-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <i class="fas fa-dove text-warning phoenix-icon mb-4"></i>
+                        <h1 class="fw-bold">Welcome to Huang</h1>
+                        <p class="lead">A sacred sanctum where women connect, share unburdened stories, and rise together—free from judgment's trap. Your voice, amplified safely.</p>
+                        <div class="btn-group-hero">
+                            <a href="#join" class="btn btn-warning btn-lg">Enter Forum</a>
+                            <a href="#safety" class="btn btn-outline-light btn-lg">Our Safety Oath</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">What is Huang?</h2>
+            <div class="row align-items-center g-4">
+                <div class="col-lg-6 scroll-fade">
+                    <p class="mb-4">A moderated phoenix-nest for women to discuss life's labyrinths: safety, relationships, careers, and triumphs. Inspired by warriors like SHAKTI's spirit—anonymous, empathetic, eternal.</p>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-check-circle text-warning me-3 mt-1" style="font-size: 1.5rem;"></i>
+                            <div>
+                                <h6 class="fw-bold">Safe Haven</h6>
+                                <p class="mb-0" style="font-size: 0.95rem;">Moderated by compassionate experts</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-check-circle text-warning me-3 mt-1" style="font-size: 1.5rem;"></i>
+                            <div>
+                                <h6 class="fw-bold">Anonymity Protected</h6>
+                                <p class="mb-0" style="font-size: 0.95rem;">Share without fear of identification</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-check-circle text-warning me-3 mt-1" style="font-size: 1.5rem;"></i>
+                            <div>
+                                <h6 class="fw-bold">Community Support</h6>
+                                <p class="mb-0" style="font-size: 0.95rem;">Connect with like-minded women</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 scroll-fade" style="animation-delay: 0.2s;">
+                    <svg width="500" height="300" viewBox="0 0 500 300" xmlns="http://www.w3c.org/2000/svg">
+  <rect width="500" height="300" rx="15" fill="#f8f9ff" stroke="#D4AF37" stroke-width="2"/>
+  <text x="250" y="40" font-family="Segoe UI" font-size="24" fill="#1a1a1a" text-anchor="middle">Huang Forum</text>
+  <rect x="20" y="70" width="140" height="80" rx="10" fill="#e3f2fd"/>
+  <text x="90" y="95" font-size="14" text-anchor="middle">Safety Stories</text>
+  <text x="90" y="115" font-size="12">23 Threads</text>
+  <text x="90" y="135" font-size="11">"Safety tips"</text>
+  <rect x="170" y="70" width="140" height="80" rx="10" fill="#f3e5f5"/>
+  <text x="240" y="95" font-size="14" text-anchor="middle">Career Climb</text>
+  <text x="240" y="115" font-size="12">12 Threads</text>
+  <rect x="320" y="70" width="140" height="80" rx="10" fill="#e8f5e8"/>
+  <text x="390" y="95" font-size="14" text-anchor="middle">Sister Circle</text>
+  <text x="390" y="115" font-size="12">45 Threads</text>
+  <circle cx="440" cy="260" r="20" fill="#D4AF37"/>
+  <text x="440" y="265" font-size="12" text-anchor="middle" fill="white">Join</text>
+</svg>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="text-center">Empowering Features</h2>
+            <p class="text-center text-muted mb-5" style="font-size: 1.05rem;">Inherited through SHAKTI, designed for sisterhood</p>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4 scroll-fade">
+                    <div class="feature-card text-center h-100">
+                        <i class="fas fa-comments fa-2x text-primary mb-3"></i>
+                        <h5>Threaded Discussions</h5>
+                        <p>Share experiences in safe categories—moderated for harmony and growth.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 scroll-fade" style="animation-delay: 0.15s;">
+                    <div class="feature-card text-center h-100">
+                        <i class="fas fa-shield-alt fa-2x text-success mb-3"></i>
+                        <h5>AI Moderation</h5>
+                        <p>Harassment zapped instantly; report, block, and thrive in peace.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 scroll-fade" style="animation-delay: 0.3s;">
+                    <div class="feature-card text-center h-100">
+                        <i class="fas fa-users fa-2x text-warning mb-3"></i>
+                        <h5>Anonymous Circles</h5>
+                        <p>Connect pseudonymously; build sisterhood without scrutiny.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 scroll-fade" style="animation-delay: 0.45s;">
+                    <div class="feature-card text-center h-100">
+                        <i class="fas fa-lock fa-2x text-danger mb-3"></i>
+                        <h5>Private Spaces</h5>
+                        <p>Create closed circles for your closest connections and deepest secrets.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 scroll-fade" style="animation-delay: 0.6s;">
+                    <div class="feature-card text-center h-100">
+                        <i class="fas fa-book fa-2x text-info mb-3"></i>
+                        <h5>Resource Library</h5>
+                        <p>Access curated guides, articles, and expert advice on topics that matter.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 scroll-fade" style="animation-delay: 0.75s;">
+                    <div class="feature-card text-center h-100">
+                        <i class="fas fa-heart fa-2x" style="color: #ff6b9d;"></i>
+                        <h5>Wellness Support</h5>
+                        <p>Connect with mental health resources and supportive communities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join -->
+    <section id="join" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="text-center">Ready to Rise?</h2>
+                    <p class="text-center text-muted mb-5" style="font-size: 1.1rem;">Sign up now—your story awaits amplification.</p>
+                    <form class="row g-3" onsubmit="handleSubmit(event)">
+                        <div class="col-md-6 scroll-fade">
+                            <input type="email" class="form-control form-control-lg" placeholder="Email (optional for anonymity)" required>
+                        </div>
+                        <div class="col-md-6 scroll-fade" style="animation-delay: 0.1s;">
+                            <input type="text" class="form-control form-control-lg" placeholder="Username" required>
+                        </div>
+                        <div class="col-12 scroll-fade" style="animation-delay: 0.2s;">
+                            <button type="submit" class="btn btn-warning btn-lg w-100">Join Huang<i class="fas fa-arrow-right ms-2"></i></button>
+                        </div>
+                    </form>
+                    <p class="text-center text-muted mt-4" style="font-size: 0.9rem;"><i class="fas fa-lock me-2"></i>Your privacy is sacred. Never shared. Ever.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety -->
+    <section id="safety" class="py-5">
+        <div class="container">
+            <h2 class="text-center text-dark">Safety First – Unwavering Oath</h2>
+            <p class="text-center text-dark mb-5" style="font-size: 1.05rem;">Powered by ethical design—your digital sanctuary is impenetrable</p>
+            <div class="row text-center g-4">
+                <div class="col-md-4 scroll-fade">
+                    <span class="safety-badge d-flex flex-column align-items-center justify-content-center" style="min-height: 120px;">
+                        <i class="fas fa-lock mb-2" style="font-size: 1.8rem;"></i>
+                        <strong>End-to-End Encrypted</strong>
+                    </span>
+                </div>
+                <div class="col-md-4 scroll-fade" style="animation-delay: 0.15s;">
+                    <span class="safety-badge d-flex flex-column align-items-center justify-content-center" style="min-height: 120px;">
+                        <i class="fas fa-user-slash mb-2" style="font-size: 1.8rem;"></i>
+                        <strong>No Tracking</strong>
+                    </span>
+                </div>
+                <div class="col-md-4 scroll-fade" style="animation-delay: 0.3s;">
+                    <span class="safety-badge d-flex flex-column align-items-center justify-content-center" style="min-height: 120px;">
+                        <i class="fas fa-hands-helping mb-2" style="font-size: 1.8rem;"></i>
+                        <strong>24/7 Moderators</strong>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 mt-5">
+        <div class="container">
+            <div class="row align-items-center mb-4">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <h5 class="mb-2"><i class="fas fa-feather-alt text-warning me-2"></i>Huang</h5>
+                    <p class="mb-0">&copy; 2026 Huang Forum. Crafted with Shakti for sisters worldwide.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="me-3" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="me-3" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <hr class="border-secondary my-3">
+            <div class="row text-center text-md-start">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <a href="#" class="text-decoration-none" style="color: #bbb;">Privacy Policy</a>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <a href="#" class="text-decoration-none" style="color: #bbb;">Terms of Service</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#" class="text-decoration-none" style="color: #bbb;">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-fade').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submission handler
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="loading"></span> Joining...';
+            btn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check me-2"></i>Welcome!';
+                btn.style.background = 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)';
+            }, 1500);
+        }
+
+        // Navbar hide/show on scroll
+        let lastScrollTop = 0;
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > 100) {
+                navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        // Accessibility: Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Add escape key functionality if needed
+            }
+        });
+    </script>
+</body>
+</html>
